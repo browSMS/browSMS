@@ -33,12 +33,12 @@ def navigate(url):
 		for head in tree.xpath('//head'):
 			head.getparent().remove(head)
 
-		#print(etree.tostring(tree, pretty_print=True))
+		##print(etree.tostring(tree, pretty_print=True))
 
 		# Generate table of contents
-		parsed_menu = menu(tree)
+		parsed_menu = menu(tree, url)
 
-		# Generate login information
+		# Generate login information (deprecated)
 		##parsed_menu.append(getlogin(tree))
 
 		# Generate contents from cleaned tree
@@ -47,17 +47,17 @@ def navigate(url):
 		# Find the most important image
 		parsed_image = None #getimage(tree)
 
-		#return [parsed_webpage_data, parsed_menu, parsed_image];
+		return [parsed_webpage_data, parsed_menu, parsed_image];
 
 		#DEBUG
-		return [
-			['Alec Baldwin is a pal', 'he is a person who acts; an actor', 'he is a pal'],
-			[('About', 'http://www.alecbaldwin.com/about'), ('30 Rock', 'http://www.alecbaldwin.com/category/media'), ('Ideas', 'http://www.alecbaldwin.com/category/ideas')],
-			'http://www.alecbaldwin.com/wp-content/uploads/2011/05/alex-baldwin-headshot.png'
-		]
+		##return [
+		##	['Alec Baldwin is a pal', 'he is a person who acts; an actor', 'he is a pal'],
+		##	[('About', 'http://www.alecbaldwin.com/about'), ('30 Rock', 'http://www.alecbaldwin.com/category/media'), ('Ideas', 'http://www.alecbaldwin.com/category/ideas')],
+		##	'http://www.alecbaldwin.com/wp-content/uploads/2011/05/alex-baldwin-headshot.png'
+		##]
 
 	else:
 		return page.status_code
 
 
-navigate('http://www.cs.washington.edu/143')
+navigate('http://www.cnn.com')
