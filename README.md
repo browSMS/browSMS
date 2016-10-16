@@ -1,6 +1,4 @@
-<snippet>
-  <content><![CDATA[
-# ${1:browsMS}
+# browsMS
 
 On the basic level, browsms allows users to browse the web in a stripped down all text environment. The user can submit 
 a url as an sms message, all the processing is done on the backend, and the server returns a pure text representation 
@@ -22,7 +20,3 @@ Cody Mckee
 Aaron Johnston 
 Peter Li 
 Trevor Shibley
-
-]]></content>
-  <tabTrigger>readme</tabTrigger>
-</snippet>
