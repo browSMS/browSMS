@@ -1,18 +1,27 @@
-"""
-Retrieves the HTML from a webpage for processing.
-
-Uses `parser.py` to parse salient data from the webpage.
-
-Passes back the data to the messaging service for formatting and sending to the client.
-"""
 from lxml import html
 from lxml import etree
 from contents import parsecontent
+from toc import getmenu
+from login import getlogin
 import requests
 
-def navigate(uid, url):
+"""
+Retrieves the HTML from a webpage for processing.
+
+Uses:
+contents.py for parsing the data of the webpage
+toc.py for parsing the menu actions of the webpage
+login.py for parsing possible login forms from the webpage
+images.py for parsing the most relevant image from the webpage
+
+Passes back an array of two elements:
+0 -> a string representing the data of the webpage
+1 -> an array of tuples representing possible menu actions
+2 -> an optional relevant image
+"""
+def navigate(url):
 	
-	page = requests.get("http://deinosaur.github.io/cody-go-fish/")
+	page = requests.get(url)
 	print(page.status_code)
 	print(page.headers['content-type'])
 	print(page.encoding)
@@ -26,12 +35,18 @@ def navigate(uid, url):
 
 		print(etree.tostring(tree, pretty_print=True))
 
-		# TODO: call toc
+		# Generate table of contents
+		menu = getmenu(tree)
+
+		# Generate login information
+		menu.append(getlogin(tree))
 
 		# Generate contents from cleaned tree
-		parsecontent(tree)
+		webpageData = parsecontent(tree)
 
-def getSessionData(uid):
-	#TODO: gets data about the settions from the database, only used internally for navigate
+		# Find the most important image
+		image = getimage(tree)
 
-navigate(2, 'www.google.com')
+		return [webpageData, menu, image];
+
+navigate('www.cs.washington.edu/332')
