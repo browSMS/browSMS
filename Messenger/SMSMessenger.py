@@ -12,5 +12,5 @@ class SMSMessenger:
 
 
 
-s = SMSMessenger("+15097693503")
-s.send_message("hi", "+15093395404")
+#s = SMSMessenger("+15097693503")
+#s.send_message("hi", "+15093395404")
