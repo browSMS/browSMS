@@ -2,27 +2,66 @@
 Returns the table of contents of the webpage
 
 Contains:
-menu: maps between text and url to go to
+menu: maps between text and url to go to, returns best image too
 login<string user, string pass>: accepts a user and password
-back: returns the most recent webpage that was cached
-# forward: EXTRA FEATURE, go forward one page
 search<string query>: pass in this string into the search bar
 show more: show more images or menus
 
 '''
 
 from lxml import html
+import requests
+import re
 
-def menu():
+def menu(url):
+    page = requests.get(url)
 
-def login():
 
-def back():
+def login(url, u, p):
+    page = requests.get(url)
+    if (page.status_code == 200):
+        #tree = html.fromstring(page.content)
+        #input_text = tree.xpath('//input/text()')
+        #for item in input_text:
+        #    print(item)
+        decoded = page.content.decode('UTF-8')
+        post_url = re.search("<form[^>]*method=('|\")post('|\")[^>]*(\/)?>", decoded)
+        if post_url != None:
+            post_url = re.split("action=('|\")", post_url.group(0))
+            for item in post_url:
+                if item.startswith('http'):
+                    post_url = re.split("\" ", item)
+                    post_url = post_url[0]
+                    break
+            #print(post_url[0])
+            payload = {'email': u, 'pass': p}
+        else:
+            return None
+        user = re.search("<input[^>]*type=('|\")(text|email)('|\")[^>]*(\/)?>", decoded)
+        password = re.search("<input[^>]*type=('|\")password('|\")[^>]*(\/)?>", decoded)
+        if user != None and password != None:
+            # print(user.group(0))
+            # print(password.group(0))
+            # print(post_url)
+            user = user.group(0)
+            password = password.group(0)
+            r = requests.post(post_url, data=payload)
+            print(r.text)
+        else:
+            return None
 
-#def forward():
+
 
 def search():
+    page = requests.get("http://www.facebook.com")
+    print(page.content)
+    if (page.status_code == 200):
+        print("hello")
 
 def moreImages():
+    pass
 
 def moreMenus():
+    pass
+
+login("http://www.facebook.com", "peterli97@gmail.com", "Handfoot13")
