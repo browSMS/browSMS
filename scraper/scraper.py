@@ -52,10 +52,5 @@ def navigate(url):
 	else:
 		return page.status_code
 
-<<<<<<< HEAD
-	navigate(2, 'http://deinosaur.github.io/cody-go-fish/')
 
-getSessionData(2)
-=======
 navigate('www.cs.washington.edu/332')
->>>>>>> aed71bb30ae4eabf7b41e4bfac60135e543b3ff4
