@@ -15,3 +15,5 @@ def parsecontent(tree):
     p = [x.strip() for x in p if x.strip()]
     print(type(p))
     print(str(p))
+    for x in p:
+        print(x)
