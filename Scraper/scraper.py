@@ -59,5 +59,5 @@ def navigate(url):
 	else:
 		return page.status_code
 
-
-navigate('http://www.cnn.com')
+if (__name__ == '__main__'):
+	navigate('http://www.cnn.com')
