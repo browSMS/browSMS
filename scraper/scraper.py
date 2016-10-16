@@ -49,4 +49,7 @@ def navigate(url):
 
 		return [webpageData, menu, image];
 
+	else:
+		return page.status_code
+
 navigate('www.cs.washington.edu/332')
