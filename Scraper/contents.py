@@ -15,7 +15,7 @@ def parsecontent(tree):
     p = tree.xpath('//*/text()')
     p = ''.join(p)
     p = re.sub(r'\n\s+\n\s+\n\s+', '\n', p)
-    print(type(p))
-    print(p)
+    #print(type(p))
+    #print(p)
     return p
 
