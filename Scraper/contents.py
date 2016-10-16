@@ -1,6 +1,6 @@
 '''
 
-	For scraping some content from some damn HTML pages m8
+craping some content from some damn HTML pages m8
 
 '''
 
@@ -18,3 +18,4 @@ def parsecontent(tree):
     print(type(p))
     print(p)
     return p
+
