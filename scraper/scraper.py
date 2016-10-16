@@ -1,25 +1,56 @@
+from lxml import html
+from lxml import etree
+from contents import parsecontent
+from toc import getmenu
+from login import getlogin
+import requests
+
 """
 Retrieves the HTML from a webpage for processing.
 
-Uses `parser.py` to parse salient data from the webpage.
+Uses:
+contents.py for parsing the data of the webpage
+toc.py for parsing the menu actions of the webpage
+login.py for parsing possible login forms from the webpage
+images.py for parsing the most relevant image from the webpage
 
-Passes back the data to the messaging service for formatting and sending to the client.
+Passes back an array of two elements:
+0 -> a string representing the data of the webpage
+1 -> an array of tuples representing possible menu actions
+2 -> an optional relevant image
 """
-from lxml import html
-from contents import parsecontent
-import requests
-
-def request():
+def navigate(url):
 	
-	page = requests.get("http://deinosaur.github.io/cody-go-fish/")
+	page = requests.get(url)
 	print(page.status_code)
 	print(page.headers['content-type'])
 	print(page.encoding)
 
 	if (page.status_code == 200):
 		tree = html.fromstring(page.content)
-	print(type(tree))
-	parsecontent(tree)
+
+		# Strip head from tree
+		for head in tree.xpath('//head'):
+			head.getparent().remove(head)
+
+		print(etree.tostring(tree, pretty_print=True))
+
+		# Generate table of contents
+		menu = getmenu(tree)
+
+		# Generate login information
+		menu.append(getlogin(tree))
+
+		# Generate contents from cleaned tree
+		webpageData = parsecontent(tree)
+
+		# Find the most important image
+		image = getimage(tree)
+
+		return [webpageData, menu, image];
+
+	else:
+		return page.status_code
 
 
-request()
+navigate('www.cs.washington.edu/332')
