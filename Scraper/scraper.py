@@ -15,7 +15,7 @@ login.py for parsing possible login forms from the webpage
 images.py for parsing the most relevant image from the webpage
 
 Passes back an array of two elements:
-0 -> an array of strings representing the data of the webpage
+0 -> string representing the data of the webpage
 1 -> an array of tuples representing possible menu actions
 2 -> an optional relevant image
 """
@@ -44,6 +44,9 @@ def navigate(url):
 		# Generate contents from cleaned tree
 		parsed_webpage_data = parsecontent(tree)
 
+		if (len(parsed_webpage_data) > 1590):
+			parsed_webpage_data = parsed_webpage_data[:1587] + '...'
+
 		# Find the most important image
 		parsed_image = None #getimage(tree)
 
@@ -60,4 +63,4 @@ def navigate(url):
 		return page.status_code
 
 if (__name__ == '__main__'):
-	navigate('http://www.cnn.com')
+	navigate('http://www.cs.washington.edu/143')
