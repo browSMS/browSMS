@@ -34,4 +34,6 @@ def navigate(uid, url):
 def getSessionData(uid):
 	#TODO: gets data about the settions from the database, only used internally for navigate
 
-navigate(2, 'www.google.com')
+	navigate(2, 'http://deinosaur.github.io/cody-go-fish/')
+
+getSessionData(2)
