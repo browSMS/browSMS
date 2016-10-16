@@ -7,11 +7,10 @@
 from lxml import html
 import requests
 
-page = requests.get("http://deinosaur.github.io/cody-go-fish/")
-tree = html.fromstring(page.content)
 
-str(tree)
-print(tree)
+def parsecontent(tree):
 
-p = tree.xpath('//p/text()');
-print(p)
+    p = tree.xpath('//p/text()')
+    print(type(p))
+    for item in p:
+        print(str(item).strip())
