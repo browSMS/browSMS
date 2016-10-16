@@ -1,4 +1,5 @@
-from app import app, request
+from flask import request
+from app import app
 import twilio.twiml
 
 @app.route('/')
