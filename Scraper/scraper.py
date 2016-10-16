@@ -4,6 +4,7 @@ from contents import parsecontent
 from toc import menu
 ##from login import getlogin
 import requests
+import re
 
 """
 Retrieves the HTML from a webpage for processing.
@@ -46,6 +47,8 @@ def navigate(url):
 
 		if (len(parsed_webpage_data) > 1590):
 			parsed_webpage_data = parsed_webpage_data[:1587] + '...'
+
+		re.sub(r'[^\x00-\x7F]+', '', parsed_webpage_data)
 
 		# Find the most important image
 		parsed_image = None #getimage(tree)
