@@ -53,4 +53,4 @@ def navigate(url):
 		return page.status_code
 
 
-navigate('http://www.cnn.com')
+#navigate('http://www.cnn.com')

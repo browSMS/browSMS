@@ -1,31 +1,30 @@
-import Scraper
+from Scraper import scraper 
 from Messenger import SMSMessenger
 from flask import request, redirect, session
 from app import app
-#import twilio.twiml
 
-messenger = SMSMessenger()
+messenger = SMSMessenger.SMSMessenger()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     message = ''
-    if request.get('body')[:4] == 'http':
-        url = request.get('body')
+    if request.values.get('Body')[:4] == 'http':
+        url = request.values.get('body')
         message = navigate(url)
     else:
-        if request.get('To') in session:
-            url = session[request.get('To')]
+        if request.values.get('To') in session:
+            url = session[request.values.get('To')]
             options = session[url] 
             str_options = valid_options(options)
-            if not request.get('body') in str_options:
+            if not request.values.get('Body') in str_options:
                 message = 'Please enter a valid option:\n'
                 message += make_options(options)
             else:
-                url = options[int(request.get('body')))[1]
+                url = options[int(request.values.get('Body'))][1]
                 message = navigate(url)
         else:
             message = 'Please enter a valid url'
-    messenger.send_message(body=message, to=request.get('From'))
+    messenger.send_message(body=message, to=request.values.get('From'))
     return 'Hey' 
 
 def valid_options(options):
@@ -33,12 +32,9 @@ def valid_options(options):
         yield str(i)
 
 def get_url(url):
-    session[request.get('To')] = url
+    session[request.values.get('To')] = url
     session[url] = Scraper.navigate(url)
 
-def add_extra_options(options):
-    pass
-     
 def make_options(options):
     message = ''
     for i, options in options:
@@ -47,7 +43,7 @@ def make_options(options):
 
 def navigate(url):
     message = ''
-    get_url(url, session)
+    get_url(url)
     message = 'You are now at: ' + url 
     message += make_options(session[url])
     return message
