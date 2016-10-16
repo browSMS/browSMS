@@ -1,12 +1,14 @@
 import Scraper
+from Messenger import SMSMessenger
 from flask import request, redirect, session
 from app import app
-import twilio.twiml
+#import twilio.twiml
+
+messenger = SMSMessenger()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     message = ''
-    resp = twilio.twiml.Response()
     if request.get('body')[:4] == 'http':
         url = request.get('body')
         message = navigate(url)
@@ -23,8 +25,8 @@ def index():
                 message = navigate(url)
 	else:
             message = 'Please enter a valid url'
-    resp.message(message)
-    return str(resp)
+    messenger.send_message(body=message, to=request.get('From'))
+    return 'Hey' 
 
 def valid_options(options):
     for i in xrange(len(options)):
