@@ -15,8 +15,8 @@ The service is accessed entierly through SMS for the end user, no data required
 
 ## Credits
 
-Miles Saul
-Cody Mckee 
-Aaron Johnston 
-Peter Li 
+Miles Saul, 
+Cody Mckee, 
+Aaron Johnston, 
+Peter Li, 
 Trevor Shibley
