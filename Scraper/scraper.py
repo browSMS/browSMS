@@ -2,7 +2,6 @@ from lxml import html
 from lxml import etree
 from contents import parsecontent
 from toc import menu
-from toc import getfavicon
 import requests
 import re
 
@@ -46,7 +45,7 @@ def navigate(url):
 		parsed_menu = menu(tree, url)
 
 		# Generate login information (deprecated)
-		parsed_image = getfavicon(url)
+		##parsed_image = getfavicon(url)
 
 		# Generate contents from cleaned tree
 		parsed_webpage_data = parsecontent(tree)

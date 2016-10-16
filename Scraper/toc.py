@@ -9,7 +9,7 @@ show more: show more images or menus
 '''
 
 
-from urlparse import urlparse
+##from urlparse import urlparse
 from lxml import html
 import pprint
 import requests
@@ -54,7 +54,7 @@ def moreImages():
 def moreMenus():
     pass
 
-def getimage(url):
-    parsed_uri = urlparse(url)
-    domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-    return domain + 'favicon.ico'
+#def getfavicon(url):
+#    parsed_uri = urlparse(url)
+#    domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+#    return domain + 'favicon.ico'
