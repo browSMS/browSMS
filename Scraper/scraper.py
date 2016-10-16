@@ -1,8 +1,8 @@
 from lxml import html
 from lxml import etree
 from contents import parsecontent
-from toc import getmenu
-from login import getlogin
+from toc import menu
+##from login import getlogin
 import requests
 
 """
@@ -15,16 +15,16 @@ login.py for parsing possible login forms from the webpage
 images.py for parsing the most relevant image from the webpage
 
 Passes back an array of two elements:
-0 -> a string representing the data of the webpage
+0 -> an array of strings representing the data of the webpage
 1 -> an array of tuples representing possible menu actions
 2 -> an optional relevant image
 """
 def navigate(url):
 	
 	page = requests.get(url)
-	print(page.status_code)
-	print(page.headers['content-type'])
-	print(page.encoding)
+	#print(page.status_code)
+	#print(page.headers['content-type'])
+	#print(page.encoding)
 
 	if (page.status_code == 200):
 		tree = html.fromstring(page.content)
@@ -33,24 +33,24 @@ def navigate(url):
 		for head in tree.xpath('//head'):
 			head.getparent().remove(head)
 
-		print(etree.tostring(tree, pretty_print=True))
+		#print(etree.tostring(tree, pretty_print=True))
 
 		# Generate table of contents
-		menu = getmenu(tree)
+		parsed_menu = menu(tree)
 
 		# Generate login information
-		menu.append(getlogin(tree))
+		##parsed_menu.append(getlogin(tree))
 
 		# Generate contents from cleaned tree
-		webpageData = parsecontent(tree)
+		parsed_webpage_data = parsecontent(tree)
 
 		# Find the most important image
-		image = getimage(tree)
+		parsed_image = None #getimage(tree)
 
-		return [webpageData, menu, image];
+		return [parsed_webpage_data, parsed_menu, parsed_image];
 
 	else:
 		return page.status_code
 
 
-navigate('www.cs.washington.edu/332')
+navigate('http://www.cnn.com')
