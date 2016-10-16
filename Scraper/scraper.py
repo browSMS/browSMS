@@ -2,8 +2,9 @@ from lxml import html
 from lxml import etree
 from contents import parsecontent
 from toc import menu
-##from login import getlogin
+from toc import getfavicon
 import requests
+import re
 
 """
 Retrieves the HTML from a webpage for processing.
@@ -33,19 +34,27 @@ def navigate(url):
 		for head in tree.xpath('//head'):
 			head.getparent().remove(head)
 
+		for script in tree.xpath('//script'):
+			script.getparent().remove(script)
+
+		for style in tree.xpath('//style'):
+			style.getparent().remove(style)
+
 		##print(etree.tostring(tree, pretty_print=True))
 
 		# Generate table of contents
 		parsed_menu = menu(tree, url)
 
 		# Generate login information (deprecated)
-		##parsed_menu.append(getlogin(tree))
+		parsed_image = getfavicon(url)
 
 		# Generate contents from cleaned tree
 		parsed_webpage_data = parsecontent(tree)
 
 		if (len(parsed_webpage_data) > 1200):
 			parsed_webpage_data = parsed_webpage_data[:1197] + '...'
+
+		re.sub(r'[^\x00-\x7F]+', '', parsed_webpage_data)
 
 		# Find the most important image
 		parsed_image = None #getimage(tree)
