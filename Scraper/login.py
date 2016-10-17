@@ -37,4 +37,4 @@ def login(url, u, p):
         else:
             return None
 
-login("http://www.facebook.com", "peterli97@gmail.com", "Handfoot13")
+login("http://www.facebook.com", "username", "password")
