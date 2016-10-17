@@ -61,9 +61,6 @@ def navigate(url):
         # Generate contents from cleaned tree
         parsed_webpage_data = parsecontent(tree)
 
-        if (len(parsed_webpage_data) > 1200):
-            parsed_webpage_data = parsed_webpage_data[:1197] + '...'
-
         re.sub(r'[^\x00-\x7F]+', '', parsed_webpage_data)
 
         # Find the most important image
