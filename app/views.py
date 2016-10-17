@@ -8,26 +8,29 @@ messenger = SMSMessenger.SMSMessenger()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     message = ''
-    if request.values.get('Body')[:4] == 'http':
-        url = request.values.get('Body')
+    body = request.values.get('Body').lower()
+    sender = request.values.get('From')
+    if body[0] != ':':
+        url = body
         message = navigate(url)
     else:
-        if request.values.get('From') in session:
-            url = session[request.values.get('From')]
+        body = body[1:]
+        if sender in session:
+            url = session[sender]
             options = session[url] 
             str_options = valid_options(options)
-            if not request.values.get('Body') in str_options:
+            if not body in str_options:
                 message = 'Please enter a valid option:\n'
                 message += make_options(options)
             else:
-                if request.values.get('Body') == '0':
+                if body == '0':
                     message = options[0]
                 else:
-                    url = options[1][int(request.values.get('Body')) - 1][1]
+                    url = options[1][int(body)) - 1][1]
                     message = navigate(url)
         else:
             message = 'Please enter a valid url'
-    messenger.send_message(body=message, to=request.values.get('From'))
+    messenger.send_message(body=message, to=sender)
     return 'Hey' 
 
 def valid_options(options):
@@ -35,7 +38,7 @@ def valid_options(options):
         yield str(i)
 
 def get_url(url):
-    session[request.values.get('From')] = url
+    session[sender] = url
     out = scraper.navigate(url) 
     session[url] = scraper.navigate(url)
 
