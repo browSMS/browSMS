@@ -1,0 +1,4 @@
+*.pyc
+Messenger/SMSMessenger.py
+Messenger/send-sms.py
+*/__init__.py
