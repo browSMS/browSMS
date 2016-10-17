@@ -19,56 +19,58 @@ Passes back an array of two elements:
 1 -> an array of tuples representing possible menu actions
 2 -> an optional relevant image
 """
-def navigate(url):
-	
-	page = requests.get(url)
-	#print(page.status_code)
-	#print(page.headers['content-type'])
-	#print(page.encoding)
+def navigate(url):    
+    try:
+        page = requests.get(url)
+    except:
+        return 404
+    #print(page.status_code)
+    #print(page.headers['content-type'])
+    #print(page.encoding)
 
-	if (page.status_code == 200):
-		tree = html.fromstring(page.content)
+    if (page.status_code == 200):
+        tree = html.fromstring(page.content)
 
-		# Strip head from tree
-		for head in tree.xpath('//head'):
-			head.getparent().remove(head)
+        # Strip head from tree
+        for head in tree.xpath('//head'):
+            head.getparent().remove(head)
 
-		for script in tree.xpath('//script'):
-			script.getparent().remove(script)
+        for script in tree.xpath('//script'):
+            script.getparent().remove(script)
 
-		for style in tree.xpath('//style'):
-			style.getparent().remove(style)
+        for style in tree.xpath('//style'):
+            style.getparent().remove(style)
 
-		##print(etree.tostring(tree, pretty_print=True))
+        ##print(etree.tostring(tree, pretty_print=True))
 
-		# Generate table of contents
-		parsed_menu = menu(tree, url)
+        # Generate table of contents
+        parsed_menu = menu(tree, url)
 
-		# Generate login information (deprecated)
-		##parsed_image = getfavicon(url)
+        # Generate login information (deprecated)
+        ##parsed_image = getfavicon(url)
 
-		# Generate contents from cleaned tree
-		parsed_webpage_data = parsecontent(tree)
+        # Generate contents from cleaned tree
+        parsed_webpage_data = parsecontent(tree)
 
-		if (len(parsed_webpage_data) > 1200):
-			parsed_webpage_data = parsed_webpage_data[:1197] + '...'
+        if (len(parsed_webpage_data) > 1200):
+            parsed_webpage_data = parsed_webpage_data[:1197] + '...'
 
-		re.sub(r'[^\x00-\x7F]+', '', parsed_webpage_data)
+        re.sub(r'[^\x00-\x7F]+', '', parsed_webpage_data)
 
-		# Find the most important image
-		parsed_image = None #getimage(tree)
+        # Find the most important image
+        parsed_image = None #getimage(tree)
 
-		return [parsed_webpage_data, parsed_menu, parsed_image];
+        return [parsed_webpage_data, parsed_menu, parsed_image];
 
-		#DEBUG
-		##return [
-		##	['Alec Baldwin is a pal', 'he is a person who acts; an actor', 'he is a pal'],
-		##	[('About', 'http://www.alecbaldwin.com/about'), ('30 Rock', 'http://www.alecbaldwin.com/category/media'), ('Ideas', 'http://www.alecbaldwin.com/category/ideas')],
-		##	'http://www.alecbaldwin.com/wp-content/uploads/2011/05/alex-baldwin-headshot.png'
-		##]
+        #DEBUG
+        ##return [
+        ##    ['Alec Baldwin is a pal', 'he is a person who acts; an actor', 'he is a pal'],
+        ##    [('About', 'http://www.alecbaldwin.com/about'), ('30 Rock', 'http://www.alecbaldwin.com/category/media'), ('Ideas', 'http://www.alecbaldwin.com/category/ideas')],
+        ##    'http://www.alecbaldwin.com/wp-content/uploads/2011/05/alex-baldwin-headshot.png'
+        ##]
 
-	else:
-		return page.status_code
+    else:
+        return page.status_code
 
 if (__name__ == '__main__'):
-	navigate('http://www.cs.washington.edu/143')
+    navigate('http://www.cs.washington.edu/143')
