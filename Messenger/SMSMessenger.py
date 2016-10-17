@@ -32,26 +32,6 @@ class SMSMessenger:
 			send_message(self, body[chars_left:], to, media_url)
 		else:
 			session[str(to) + '_chars'] = chars_left - body
-		
-
-    	
-'''
-menu_length = 0
-
-        for content, link in message[1]:
-            menu_length += len(content)
-
-        # Cap is 1600 chars
-        length_allowed = 1600 - menu_length - 20 # 20 is the length of the string "[Current Page Content]"
-
-
-
-        # Subtract chars needed for 0) , 1) ,...
-        for num in range(1, len(message[1])):
-           length_allowed - (2 + math.ceil(math.log(num, 10)))
-
-        re.sub(r'[^\x00-\x7F]+', '', message[0])
-'''
 
 
 #s = SMSMessenger("+15097693503")
