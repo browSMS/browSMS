@@ -9,8 +9,3 @@ class SMSMessenger:
 
     def send_message(self, body, to, media_url=[]):
         message = self.client.messages.create(body=body, to=to, from_=self.phone_number, media_url=media_url) 
-
-
-
-#s = SMSMessenger("+15097693503")
-#s.send_message("hi", "+15093395404")
