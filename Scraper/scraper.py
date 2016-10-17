@@ -41,6 +41,15 @@ def navigate(url):
         for style in tree.xpath('//style'):
             style.getparent().remove(style)
 
+        for pre in tree.xpath('//pre'):
+            pre.getparent().remove(pre)
+
+        for code in tree.xpath('//code'):
+            code.getparent().remove(code)
+
+        for aside in tree.xpath('//aside'):
+            aside.getparent().remove(aside)
+
         ##print(etree.tostring(tree, pretty_print=True))
 
         # Generate table of contents
@@ -73,4 +82,5 @@ def navigate(url):
         return page.status_code
 
 if (__name__ == '__main__'):
-    navigate('http://www.cs.washington.edu/143')
+    data = navigate('http://www.cs.washington.edu/143')
+    print (data[0])
