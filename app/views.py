@@ -33,7 +33,7 @@ def index():
         else:
             message = 'Please enter a valid url'
     messenger.send_message(body=message, to=sender)
-    return 'Hey' 
+    return body 
 
 def valid_options(options):
     for i in xrange(0, len(options) + 1):
