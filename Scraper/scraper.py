@@ -59,7 +59,7 @@ def navigate(url):
         ##parsed_image = getfavicon(url)
 
         # Generate contents from cleaned tree
-        parsed_webpage_data = parsecontent(tree)
+        parsed_webpage_data = parsecontent(tree)[1]
 
         re.sub(r'[^\x00-\x7F]+', '', parsed_webpage_data)
 
@@ -79,5 +79,5 @@ def navigate(url):
         return page.status_code
 
 if (__name__ == '__main__'):
-    data = navigate('http://www.cs.washington.edu/143')
+    data = navigate('http://www.cnn.com')
     print (data[0])
