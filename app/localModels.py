@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app import app
 import datetime
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'http://browsms.ctwglzvlbtip.us-west-2.rds.amazonaws.com/'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 # Models for db tables
 
 class history(db.Model):
-    phone_number = db.Column(db.String, primary_key = True)
+    phone_number = db.Column(db.Integer, primary_key = True)
     link = db.Column(db.String)
     time = db.Column(db.Integer)
 

@@ -2,6 +2,7 @@ from Scraper import scraper
 from Messenger import SMSMessenger
 from flask import request, redirect, session
 from app import app
+from flask_sqlalchemy import SQLAlchemy
 
 messenger = SMSMessenger.SMSMessenger()
 
