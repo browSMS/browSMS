@@ -3,6 +3,7 @@ Scrape content from html page
 '''
 
 from lxml import html
+import re
 
 def parsecontent(tree):
     result = ' '.join(tree.text_content().strip().split())
@@ -13,7 +14,9 @@ def parsecontent(tree):
             links.append((a.text.strip(), str(href)))
             a.text = ' {' + a.text.strip() + '} '
 
-    result = ' '.join(tree.text_content().strip().split())
+    result = tree.text_content()
+    result = re.sub(r'[^\x00-\x7F]+', '', result)
+    result = ' '.join(result.strip().split())
     # i = 0
     # while i < len(result) - 1:
     #     if result[i].islower() and result[i + 1].isupper():
